@@ -7,7 +7,7 @@ passport.serializeUser(function (user, done) {
 });
 
 passport.deserializeUser(function (user, done) {
-return user
+  return user
 });
 
 passport.use(new GoogleStrategy({
@@ -15,8 +15,13 @@ passport.use(new GoogleStrategy({
   clientSecret: "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",
   callbackURL: "http://localhost:3000/google/callback"
 },
-  function (accessToken, refreshToken, profile, done) {
-    console.log(profile.emails);
-    return done(null, {email:profile.emails[0].value});
+  async function (accessToken, refreshToken, profile, done) {
+    if (profile.emails[0].value.indexOf('fpt.edu.vn')!=-1) {
+      const checkAccount = await User.findOne({ email: profile.emails[0].value })
+      console.log(checkAccount);
+      if (checkAccount) {
+        return done(null, profile);
+      } else return done(null, false);
+    }
   }
 ));
