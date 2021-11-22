@@ -16,7 +16,7 @@ passport.use(new GoogleStrategy({
   callbackURL: "http://localhost:3000/google/callback"
 },
   async function (accessToken, refreshToken, profile, done) {
-    if (profile.emails[0].value.indexOf('fpt.edu.vn')!=-1) {
+    if (profile.emails[0].value.indexOf('fpt.edu.vn')) {
       const checkAccount = await User.findOne({ email: profile.emails[0].value })
       console.log(checkAccount);
       if (checkAccount) {
