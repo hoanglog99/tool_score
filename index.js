@@ -43,17 +43,6 @@ app.get('/', function (req, res) {
   return res.send('helloo! dang nhap di ban')
 });
 
-app.post('/login', async function (req, res) {
-  const account = req.body
-  console.log(account.email)
-  const checkAccount = await User.findOne({ email: account.email })
-  if (!checkAccount) {
-    return res.send('khong co tai khoan')
-  }
-  return res.send('dang nhap thanh cong')
-
-})
-
 app.get('/success', isLogin, async function (req, res) {
   return res.send('dang nhap thanh cong')
 
